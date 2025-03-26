@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAACP Bylaws Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+  <div class="max-w-6xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-900">NAACP San Francisco Branch - Bylaws Dashboard</h1>
+
+    <div class="flex justify-between items-center mb-4">
+      <input type="text" id="searchInput" placeholder="Search bylaws..." class="w-full p-2 border border-gray-300 rounded" onkeyup="filterArticles()" />
+      <button onclick="toggleTheme()" class="ml-4 px-4 py-2 rounded bg-blue-900 text-white">Toggle Theme</button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="bylawCards">
+      <!-- Cards will be injected here by script -->
+    </div>
+
+    <div class="mt-10">
+      <h2 class="text-2xl font-semibold mb-4 text-blue-900">Committee Directory</h2>
+      <ul class="list-disc list-inside text-gray-700">
+        <li>Education Committee</li>
+        <li>Membership and Life Membership Committee</li>
+        <li>Legal Redress Committee</li>
+        <li>Political Action Committee</li>
+        <li>Communications, Press & Publicity Committee</li>
+        <li>Health Committee</li>
+        <li>Economic Development Committee</li>
+        <li>Environmental & Climate Justice Committee</li>
+        <li>Criminal Justice Committee</li>
+        <li>Housing Committee</li>
+        <li>Labor and Industry Committee</li>
+        <li>WIN (Women in NAACP)</li>
+        <li>Religious Affairs Committee</li>
+        <li>ACT-SO Committee</li>
+        <li>Youth Works Committee</li>
+        <li>Finance Committee</li>
+        <li>Armed Services & Veterans Affairs Committee</li>
+        <li>LGBTQIA+ Committee</li>
+        <li>Freedom Fund Committee</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const articles = {
+      "Article I: Name": "The name of this unit shall be the NAACP San Francisco Branch.",
+      "Article II: Objectives": "Ensure the political, educational, social, and economic equality of all citizens and eliminate racial prejudice.",
+      "Article III: Organizational Structure": "Branches are governed by a local Executive Committee. Must maintain 50+ adult members. Use of NAACP trademarks and branding governed by national standards.",
+      "Article IV: Membership": "Eligibility, membership categories (adult, youth, life), dues requirements, and membership standing.",
+      "Article V: Meetings": "Units must hold monthly meetings. Annual meeting in December. Quorum and order of business required.",
+      "Article VI: Officers and Committees": "Defines officer roles (President, VPs, Secretary, Treasurer), election rules, and vacancies.",
+      "Article VII: Executive Committee": "Governs branch business between regular meetings. Must meet monthly. Subject to oversight by membership.",
+      "Article VIII: Standing Committees": "Committees include Membership, Education, Legal Redress, Political Action, etc. Chairs appointed by President and approved.",
+      "Article IX: Elections": "Election of officers and committee members every 2 years. Nomination procedures and voting rules defined.",
+      "Article X: Finances": "Outlines budgeting, handling of funds, and audit requirements. Treasurer responsibilities detailed.",
+      "Article XI: Amendments": "Describes how bylaws may be amended by majority vote and with proper notice.",
+      "Article XII: Rules of Order": "Robert's Rules of Order shall govern procedural matters not covered in bylaws."
+    };
+
+    const container = document.getElementById("bylawCards");
+    Object.entries(articles).forEach(([title, content], index) => {
+      const card = document.createElement("div");
+      card.className = "bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-5 transition-all duration-300";
+      card.setAttribute("data-title", title.toLowerCase());
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-bold text-blue-800 dark:text-white">${title}</h3>
+          <i data-lucide="book-open" class="text-blue-600"></i>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">${content}</p>
+      `;
+      container.appendChild(card);
+    });
+    lucide.createIcons();
+
+    function filterArticles() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('#bylawCards > div');
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title');
+        card.style.display = title.includes(input) ? "block" : "none";
+      });
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+</body>
+</html>
